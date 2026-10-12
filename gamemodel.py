@@ -90,8 +90,14 @@ class Player:
         # HINT: This method should give a negative value if the projectile missed to the left and positive if it missed to the right.
         # The distance should be how far the projectile and cannon are from touching, not the distance between their centers.
         # You probably need to use getCannonSize and getBallSize from Game to compensate for the size of cannons/cannonballs
+        d = proj.getX() - self.getX()
+        s = self.game.cannonSize/2 + self.game.ballSize
 
-        return proj.getX() - self.getX()
+        if abs(d) < s:
+            return 0
+        if d < 0:
+            return d + s
+        return d - s
 
     """ The current score of this player """
     def getScore(self):
