@@ -12,8 +12,8 @@ class Game:
         self.currentPlayerIndex = 0
         self.wind = 0
         self.players = []
-        self.players.append(Player(self, cannonX = -90, color = "blue"))
-        self.players.append(Player(self, cannonX = 90, color = "red"))
+        self.players.append(Player(self, False, cannonX = -90, color = "blue"))
+        self.players.append(Player(self, True, cannonX = 90, color = "red"))
 
     """ A list containing both players """
     def getPlayers(self):
@@ -57,13 +57,14 @@ class Game:
 
 """ Models a player """
 class Player:
-    def __init__(self, game, cannonX, color):
+    def __init__(self, game,isReversed, cannonX, color):
         self.game = game
         self.score = 0
         self.color = color
         self.cannonX = cannonX
         self.aimAngle = 0
         self.aimVelocity = 0
+        self.isReversed = isReversed
 
    #HINT: It should probably take the Game that creates it as parameter and some additional properties that differ between players (like firing-direction, position and color)
 
@@ -75,7 +76,7 @@ class Player:
         self.aimAngle = angle
         self.aimVelocity = velocity
         return Projectile(
-            angle=angle,
+            angle=180-angle if self.isReversed else angle,
             velocity=velocity,
             wind=self.game.getCurrentWind(),
             xPos=self.cannonX,
